@@ -1,16 +1,20 @@
-import "./app.scss";
+import { useContext, useEffect, useState } from "react";
 import AppFilter from "../app-filter/app-filter";
 import AppInfo from "../app-info/app-info";
 import SearchPanel from "../search-panel/search-panel";
-import { Component, useState } from "react";
 import MovieList from "../movie-list/movie-list";
 import MoviesAddForm from "../movies-add-form/movies-add-form";
 import { v4 as uuidv4 } from "uuid";
+import "./app.scss";
+import { Context } from "../../context";
 
 const App = () => {
-  const [data, setData] = useState(arr);
+  const [data, setData] = useState([]);
   const [term, setTerm] = useState("");
   const [filter, setFilter] = useState("all");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { state, dispatch } = useContext(Context);
 
   const onDelete = (id) => {
     setData(data.filter((c) => c.id !== id));
@@ -63,6 +67,25 @@ const App = () => {
 
   const updateFilterHandler = (filter) => setFilter(filter);
 
+  useEffect(() => {
+    setIsLoading(true);
+    fetch("https://jsonplaceholder.typicode.com/todos?_start=0&_end=7")
+      .then((response) => response.json())
+      .then((json) => {
+        const newArr = json.map((item) => ({
+          name: item.title,
+          id: item.id,
+          viewers: item.id * 10,
+          favourite: false,
+          like: false,
+        }));
+        setData(newArr);
+        dispatch({ type: "GET_DATA", payload: newArr });
+      })
+      .catch((error) => console.log(error))
+      .finally(() => setIsLoading(false));
+  }, []);
+
   return (
     <div className="app font-monospace">
       <div className="content">
@@ -77,6 +100,7 @@ const App = () => {
             updateFilterHandler={updateFilterHandler}
           />
         </div>
+        {isLoading && "loading..."}
         <MovieList
           data={filterHandler(searchHandler(data, term), filter)}
           onDelete={onDelete}
@@ -204,22 +228,22 @@ const App = () => {
 //   }
 // }
 
-const arr = [
-  {
-    name: "Empire of osman",
-    viewers: 988,
-    favourite: false,
-    like: false,
-    id: 1,
-  },
-  {
-    name: "Ertugrul",
-    viewers: 789,
-    favourite: false,
-    like: false,
-    id: 2,
-  },
-  { name: "Omar", viewers: 1091, favourite: false, like: false, id: 3 },
-];
+// const arr = [
+//   {
+//     name: "Empire of osman",
+//     viewers: 988,
+//     favourite: false,
+//     like: false,
+//     id: 1,
+//   },
+//   {
+//     name: "Ertugrul",
+//     viewers: 789,
+//     favourite: false,
+//     like: false,
+//     id: 2,
+//   },
+//   { name: "Omar", viewers: 1091, favourite: false, like: false, id: 3 },
+// ];
 
 export default App;

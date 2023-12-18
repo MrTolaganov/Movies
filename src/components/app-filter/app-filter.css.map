@@ -1,1 +1,10 @@
-{"version":3,"sources":["app-filter.scss","app-filter.css"],"names":[],"mappings":"AAAA;EACE,gBAAA;ACCF","file":"app-filter.css"}
+{
+  "version": 3,
+  "sources": [
+    "app-filter.scss",
+    "app-filter.css"
+  ],
+  "names": [],
+  "mappings": "AAAA;EACE,gBAAA;ACCF",
+  "file": "app-filter.css"
+}

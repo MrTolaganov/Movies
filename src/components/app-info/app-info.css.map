@@ -1,1 +1,10 @@
-{"version":3,"sources":["app-info.scss","app-info.css"],"names":[],"mappings":"AAAA;EACE,eAAA;EACA,kBAAA;EACA,yBAAA;EACA,8CAAA;ACCF","file":"app-info.css"}
+{
+  "version": 3,
+  "sources": [
+    "app-info.scss",
+    "app-info.css"
+  ],
+  "names": [],
+  "mappings": "AAAA;EACE,eAAA;EACA,kBAAA;EACA,yBAAA;EACA,8CAAA;ACCF",
+  "file": "app-info.css"
+}
