@@ -1,13 +1,15 @@
-import { Component, useState } from "react";
+import { useContext, useState } from "react";
 import "./search-panel.scss";
+import { Context } from "../../context";
 
-const SearchPanel = (props) => {
+const SearchPanel = () => {
   const [term, setTerm] = useState("");
+  const { _, dispatch } = useContext(Context);
 
   const updateTermHandler = (event) => {
     const term = event.target.value.toLowerCase().trim();
     setTerm(term);
-    props.updateTermHandler(term);
+    dispatch({ type: "ON_TERM", payload: term });
   };
 
   return (
@@ -20,31 +22,5 @@ const SearchPanel = (props) => {
     />
   );
 };
-
-// class SearchPanel extends Component {
-//   constructor(props) {
-//     super(props);
-
-//     this.state = { term: "" };
-//   }
-
-//   updateTermHandler = (event) => {
-//     const term = event.target.value.toLowerCase().trim();
-//     this.setState({ term });
-//     this.props.updateTermHandler(term);
-//   };
-
-//   render() {
-//     return (
-//       <input
-//         type="text"
-//         className="form-control search-input"
-//         placeholder="Kinolarni qidirish"
-//         onChange={this.updateTermHandler}
-//         value={this.state.term}
-//       />
-//     );
-//   }
-// }
 
 export default SearchPanel;

@@ -1,6 +1,10 @@
+import { useContext } from "react";
 import "./app-filter.scss";
+import { Context } from "../../context";
 
-const AppFilter = ({ updateFilterHandler, filter }) => {
+const AppFilter = () => {
+  const { state, dispatch } = useContext(Context);
+
   return (
     <div className="btn-group">
       {btnsArr.map((btn) => (
@@ -8,9 +12,9 @@ const AppFilter = ({ updateFilterHandler, filter }) => {
           key={btn.name}
           type="button"
           className={
-            "btn btn-" + (btn.name === filter ? "" : "outline-") + "dark"
+            "btn btn-" + (btn.name === state.filter ? "" : "outline-") + "dark"
           }
-          onClick={() => updateFilterHandler(btn.name)}
+          onClick={() => dispatch({ type: "ON_FILTER", payload: btn.name })}
         >
           {btn.label}
         </button>

@@ -1,4 +1,5 @@
 import { createContext, useReducer } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 const initialValue = {
   data: [],
@@ -25,6 +26,20 @@ const reducer = (state = initialValue, action) => {
         return item;
       });
       return { ...state, data: toggleArr };
+    case "ADD_FORM":
+      const { name, viewers } = payload;
+      const addFormArr = {
+        name,
+        viewers,
+        id: uuidv4(),
+        favourite: false,
+        like: false,
+      };
+      return { ...state, data: [...state.data, addFormArr] };
+    case "ON_TERM":
+      return { ...state, term: payload };
+    case "ON_FILTER":
+      return { ...state, filter: payload };
     default:
       return { state };
   }
