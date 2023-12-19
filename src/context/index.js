@@ -16,6 +16,15 @@ const reducer = (state = initialValue, action) => {
     case "ON_DELETE":
       const deleteArr = state.data.filter((c) => c.id !== payload);
       return { ...state, data: deleteArr };
+    case "ON_TOGGLE_PROP":
+      const { id, prop } = payload;
+      const toggleArr = state.data.map((item) => {
+        if (item.id === id) {
+          return { ...item, [prop]: !item[prop] };
+        }
+        return item;
+      });
+      return { ...state, data: toggleArr };
     default:
       return { state };
   }

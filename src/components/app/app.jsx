@@ -16,10 +16,6 @@ const App = () => {
 
   const { state, dispatch } = useContext(Context);
 
-  const onDelete = (id) => {
-    setData(data.filter((c) => c.id !== id));
-  };
-
   const addForm = (item) => {
     const newItem = {
       name: item.name,
@@ -42,25 +38,6 @@ const App = () => {
     });
 
     setData(newArr);
-  };
-
-  const searchHandler = (arr, term) => {
-    if (term.length === 0) {
-      return arr;
-    } else {
-      return arr.filter((item) => item.name.toLowerCase().indexOf(term) > -1);
-    }
-  };
-
-  const filterHandler = (arr, filter) => {
-    switch (filter) {
-      case "popular":
-        return arr.filter((item) => item.like);
-      case "mostViewers":
-        return arr.filter((item) => item.viewers > 800);
-      default:
-        return arr;
-    }
   };
 
   const updateTermHandler = (term) => setTerm(term);
@@ -101,11 +78,7 @@ const App = () => {
           />
         </div>
         {isLoading && "loading..."}
-        <MovieList
-          data={filterHandler(searchHandler(data, term), filter)}
-          onDelete={onDelete}
-          onToggleProp={onToggleProp}
-        />
+        <MovieList />
         <MoviesAddForm addForm={addForm} />
       </div>
     </div>

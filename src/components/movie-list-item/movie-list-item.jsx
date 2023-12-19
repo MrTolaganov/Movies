@@ -1,5 +1,6 @@
-import { Component } from "react";
+import { Component, useContext } from "react";
 import "./movie-list-item.scss";
+import { Context } from "../../context";
 
 // class MovieListItem extends Component {
 //   constructor(props) {
@@ -64,7 +65,22 @@ import "./movie-list-item.scss";
 // }
 
 const MovieListItem = (props) => {
-  const { name, viewers, favourite, like, onDelete, onToggleProp } = props;
+  const { name, viewers, favourite, like, id } = props;
+
+  const { state, dispatch } = useContext(Context);
+
+  const onDelete = () => {
+    dispatch({ type: "ON_DELETE", payload: id });
+  };
+
+  const onToggleProp = (event) => {
+    const payload = {
+      id,
+      prop: event.currentTarget.getAttribute("data-toggle"),
+    };
+
+    dispatch({ type: "ON_TOGGLE_PROP", payload });
+  };
 
   return (
     <li
